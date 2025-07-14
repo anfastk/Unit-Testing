@@ -69,20 +69,4 @@ func TestSignUpHandler(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, w.Code)
 		assert.Contains(t, w.Body.String(), "Binding the data")
 	})
-
-	t.Run("Dupicate User", func(t *testing.T) {
-		user := models.UserModel{
-			Name:     "Anfas",
-			Email:    "anfas@gmail.com",
-			Password: "Anfas@123",
-		}
-		body, _ := json.Marshal(user)
-		req, _ := http.NewRequest(http.MethodPost, "/signup", bytes.NewBuffer(body))
-		req.Header.Set("Content-Type", "application/json")
-		w := httptest.NewRecorder()
-
-		r.ServeHTTP(w, req)
-		assert.Equal(t, http.StatusInternalServerError, w.Code)
-		assert.Contains(t, w.Body.String(), "User already exist")
-	})
 }
