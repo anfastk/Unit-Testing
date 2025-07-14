@@ -24,6 +24,6 @@ func TestUserLogoutHandler(t *testing.T) {
 	var responce map[string]string
 	err = json.Unmarshal(w.Body.Bytes(), &responce)
 	assert.NoError(t, err)
-	assert.Equal(t, "Logout successfull", responce["message"])
+	assert.Equal(t, "Logout successful", responce["message"])
 
 }
