@@ -14,7 +14,7 @@ func UserLoginHandler(c *gin.Context) {
 
 	var user models.UserModel
 	var UserInput struct {
-		Email    string `json:"email"`
+		Email    string `json:"email"` 
 		Password string `json:"password"`
 	}
 
