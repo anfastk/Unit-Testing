@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +13,7 @@ import (
 func HashPassword(password string) (string, error) {
 	hashedBytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		fmt.Println("Failed to hash password")
+		log.Println("Failed to hash password")
 		return "", err
 	}
 	return string(hashedBytes), nil
@@ -24,7 +24,7 @@ func SignUp(c *gin.Context) {
 	var userInput models.UserModel
 
 	if err := c.ShouldBindJSON(&userInput); err != nil {
-		fmt.Println("Failed to bind signup data")
+		log.Println("Failed to bind signup data")
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Binding the data",
 			"err":     err.Error(),
@@ -41,7 +41,7 @@ func SignUp(c *gin.Context) {
 
 	hashedPassword, err := HashPassword(userInput.Password)
 	if err != nil {
-		fmt.Println("Failed to hash password")
+		log.Println("Failed to hash password")
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to process password",
 			"err":     err.Error(),
@@ -51,7 +51,7 @@ func SignUp(c *gin.Context) {
 	userInput.Password = hashedPassword
 	result := config.DB.Create(&userInput)
 	if result.Error != nil {
-		fmt.Println("User already exist", err)
+		log.Println("User already exist", err)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "User already exist",
 			"err":     result.Error,

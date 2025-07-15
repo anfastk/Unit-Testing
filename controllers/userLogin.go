@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,7 @@ func UserLoginHandler(c *gin.Context) {
 	}
 
 	if err := c.ShouldBindJSON(&UserInput); err != nil {
-		fmt.Println("Failed to bind login data")
+		log.Println("Failed to bind login data")
 		c.JSON(400, gin.H{
 			"message": "Failed to bind input data",
 			"err":     err.Error(),
@@ -28,7 +28,7 @@ func UserLoginHandler(c *gin.Context) {
 	}
 
 	if UserInput.Email == "" || UserInput.Password == "" {
-		fmt.Println("Missing email or password")
+		log.Println("Missing email or password")
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Email and Password are required",
 		})
