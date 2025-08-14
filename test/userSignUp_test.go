@@ -86,3 +86,4 @@ func TestSignUpHandler(t *testing.T) {
 		assert.Contains(t, w.Body.String(), "User already exist")
 	})
 }
+ 
